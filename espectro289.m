@@ -18,3 +18,7 @@ h = pdeplot(p0,e0,t0,'xydata',u,'zdata',u,...
 aa = [2,-3,1;-4,9,2;6,12,-2]
 bb = [3;4;-2]
 resultado = LUC_R(A, b)
+variable = 0
+if A*resultado == b
+    variable = 1
+end

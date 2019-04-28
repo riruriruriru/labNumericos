@@ -12,7 +12,7 @@ function [resultado] = determinanteR(matriz,i)
                     newMatrix = matriz;
                     newMatrix(:,i) = [];
                     newMatrix(1,:) = [];
-                 
+                    if matriz(1,i) =
                     resultado= resultado+matriz(1,i)*sign*determinanteR(newMatrix, i);
                 end
             end
