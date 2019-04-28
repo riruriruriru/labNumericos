@@ -5,7 +5,7 @@ function [respuesta] = diagonalDominante(matriz)
 if n == m
     respuesta = true;
     for i=1:n
-        a = i
+        a = i;
         acumulador = 0;
         for j=1:n
             acumulador = acumulador + abs(matriz(i,j));

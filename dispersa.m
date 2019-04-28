@@ -12,9 +12,9 @@ for i=1:n
     end
 end
 if contador >= mitadTotal
-    respuesta = true
+    respuesta = true;
 else
-    respuesta = false
+    respuesta = false;
 end
 end
 
