@@ -1,0 +1,6 @@
+function [resultado]=LUC_R(matrix)
+    [L, U] = LUC(matrix);
+    [n,m] = size(L);
+    resultado = zeros(m,1)
+    resultado_parcial = zeros(m,1)
+    
