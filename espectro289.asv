@@ -27,10 +27,3 @@ variable2 = 0
 if round(resultado,3) == round(resultado2,3)
     variable2 = 1
 end
-[gaussSeidel,i1,e1] = gauss_seidel(A,b,500,0)
-[gaussJacobi,i1,e1] = gauss_jacobi(A,b,500,0)
-variable3 = 0
-if round(gaussSeidel,3) == round(gaussJacobi,3)
-    variable3 = 1
-end
-
