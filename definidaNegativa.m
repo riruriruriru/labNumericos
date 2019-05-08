@@ -6,7 +6,8 @@ if n == m
     respuesta = true;
     for i=1:n
         [n2,m2] = size(otraMatriz);
-        esDeterminante = determinante(otraMatriz);
+        %esDeterminante = determinante(otraMatriz);
+        esDeterminante = det(otraMatriz);
         signo = (-1)^n2;
         if signo == 1
             if esDeterminante <= 0

@@ -8,7 +8,8 @@ if n == m
     respuesta = true;
     for i=1:n
         [n2,m2] = size(otraMatriz);
-        esDeterminante = determinante(otraMatriz);
+        %esDeterminante = determinante(otraMatriz);
+        esDeterminante = det(otraMatriz);
         if esDeterminante <= 0
             respuesta = false;
             break;
