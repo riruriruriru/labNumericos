@@ -1,4 +1,4 @@
-function graphTimeDir(tiempos,t,name1,name2,name3,name4,name5)
+function graphTimeDirSinGivens(tiempos,t,name1,name2,name3,name4)
 %CREATEFIGURE(YVECTOR1)
 %  YVECTOR1:  bar yvector
 
@@ -18,7 +18,6 @@ xlabel('Metodo');
 ylabel('Tiempo (s)');
 title(t);
 % Create bar
-c = {name1,name2,name3,name4,name5};
+c = {name1,name2,name3,name4};
 bar(tiempos)
-set(gca, 'XTick', 1:5, 'XTickLabel', c);
-
+set(gca, 'XTick', 1:4, 'XTickLabel', c);

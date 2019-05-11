@@ -1,29 +1,51 @@
-function [sol,Error,contador1Doo,contador2Doo] = doolittle(A, b)
-[m,n] = size(A);
-L = zeros(n, n);
-U = zeros(n, n);
-contador1Doo = 0;
-contador2Doo = 0;
-for k = 1:n
-    L(k, k) = 1;
-	for i = k + 1: m
-	L(i,k) = A(i,k) / A(k,k);
-		for j = k + 1 : n
-			A(i,j) = A(i,j) - L(i,k)*A(k,j);
-            contador1Doo = contador1Doo + 1;
-            contador2Doo = contador2Doo + 1;
+function [L,error,contDoo] = doolittle(A, b)
+    n = length(b);
+    contDoo = 0;
+    error = 0;
+    L = zeros(n, 1);
+    U = zeros(n, 1);
+    % decomposition of matrix, Doolittle’s Method
+    for i = 1:1:n
+        for j = 1:1:(i - 1)
+            alpha = A(i,j);
+            for k = 1:1:(j - 1)
+                alpha = alpha - A(i,k)*A(k,j);
+                contDoo = contDoo+2;
+            end
+            A(i,j) = alpha/A(j,j);
+            contDoo = contDoo+1;
         end
-        contador1Doo = contador1Doo + 1;
-        contador2Doo = contador2Doo + 1;
+        for j = i:1:n
+            alpha = A(i,j);
+            for k = 1:1:(i - 1)
+                alpha = alpha - A(i,k)*A(k,j);
+                contDoo = contDoo+2;
+            end
+            A(i,j) = alpha;
+        end
     end
-    for j = k : n
-		U(k,j) = A(k,j);
+    %A = L+U-I
+    % find solution of Ly = b
+    for i = 1:1:n
+        alpha = 0;
+        for k = 1:1:i
+            alpha = alpha + A(i,k)*U(k);
+            contDoo = contDoo+2;
+        end
+        U(i) = b(i) - alpha;
+        contDoo = contDoo+1;
     end
-end
-z = inv(L)*b;
-sol = inv(U)*z;
-Error = norm(eye(n)-inv(L*U)*A);
-contador1Doo = contador1Doo + 1;
-contador2Doo = contador2Doo + 4;
-end
+    % find solution of Ux = y
+    for i = n:(-1):1
+        alpha = 0;
+        for k = (i + 1):1:n
+            alpha = alpha + A(i,k)*L(k);
+            contDoo = contDoo+2;
+        end
+        L(i) = (U(i) - alpha)/A(i, i);
+        contDoo = contDoo+2;
+    end
+    I = eye(n,n);
+    error = norm(I-inv(L*U)*A);
 
+end

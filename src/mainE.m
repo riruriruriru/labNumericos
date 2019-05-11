@@ -50,10 +50,10 @@ tic,
 [resultHous289, errorHous289, cont1Hous289,cont2Hous289] = Housholder(A289,b289);
 tiempoHousholder289 = toc;
 tic,
-[resultCholesky289, errorCholesky289, cont1Cholesky289,cont2Cholesky289] = cholesky(A289, b289);
+[resultCholesky289, errorCholesky289, contCholesky289] = cholesky(A289, b289);
 tiempoCholesky289 = toc;
 tic,
-[resultQR289, errorQR289, cont1QR289,cont2QR289] = QR(A289, b289);
+[resultQR289, errorQR289, contQR289] = QR(A289, b289);
 tiempoQR289 = toc;
 tic,
 [resultGiv289, errorGiv289, cont1Giv289,cont2Giv289] = givens(A289,b289);
@@ -66,10 +66,10 @@ tic,
 [resultHous1089, errorHous1089, cont1Hous1089,cont2Hous1089] = Housholder(A1089,b1089);
 tiempoHousholder1089 = toc;
 tic,
-[resultCholesky1089, errorCholesky1089, cont1Cholesky1089,cont2Cholesky1089] = cholesky(A1089, b1089);
+[resultCholesky1089, errorCholesky1089, contCholesky1089] = cholesky(A1089, b1089);
 tiempoCholesky1089 = toc;
 tic,
-[resultQR1089, errorQR1089, cont1QR1089,cont2QR1089] = QR(A1089, b1089);
+[resultQR1089, errorQR1089, contQR1089] = QR(A1089, b1089);
 tiempoQR1089 = toc;
 tic,
 [resultGiv1089, errorGiv1089, cont1Giv1089,cont2Giv1089] = givens(A1089,b1089);
@@ -82,11 +82,15 @@ tic,
 [resultHous4225, errorHous4225, cont1Hous4225,cont2Hous4225] = Housholder(A4225,b4225);
 tiempoHousholder4225 = toc;
 tic,
-[resultCholesky4225, errorCholesky4225, cont1Cholesky4225,cont2Cholesky4225] = cholesky(A4225, b4225);
+[resultCholesky4225, errorCholesky4225, contCholesky4225] = cholesky(A4225, b4225);
 tiempoCholesky4225 = toc;
 tic,
-[resultQR4225, errorQR4225, cont1QR4225,cont2QR4225] = QR(A4225, b4225);
+[resultQR4225, errorQR4225, contQR4225] = QR(A4225, b4225);
 tiempoQR4225 = toc;
+%givens se demora demasiado, por lo tanto se comprueba si la matriz es
+%dispersa con mas del 70% de sus elementos iguales a 0
+%si se cumple esta condicion, entonces se aplica givens sobre 1/4 de la
+%matriz
 tic,
 [resultGiv4225, errorGiv4225, cont1Giv4225,cont2Giv4225] = givens(A4225,b4225);
 tiempoGivens4225 = toc;
@@ -99,13 +103,13 @@ tiemposDir4225 = [tiempoDoolittle4225, tiempoHousholder4225, tiempoCholesky4225,
 %tiempos289 = [tiempoJacobi289, tiempoSeidel289];
 %tiempos1089 = [tiempoJacobi1089,tiempoSeidel1089];
 %tiempos4225 = [tiempoJacobi4225,tiempoSeidel4225];
-graphTimeDir(tiempos289,'Matriz 289x289','Doolittle','Housholder','Cholesky','QR','Givens');
-graphTimeDir(tiempos1089,'Matriz 1089x1089','Doolittle','Housholder','Cholesky','QR','Givens');
-graphTimeDir(tiempos4225,'Matriz 4225x4225','Doolittle','Housholder','Cholesky','QR','Givens');
+graphTimeDir(tiemposDir289,'Matriz 289x289','Doolittle','Housholder','Cholesky','QR','Givens');
+graphTimeDir(tiemposDir1089,'Matriz 1089x1089','Doolittle','Housholder','Cholesky','QR','Givens');
+graphTimeDir(tiemposDir4225,'Matriz 4225x4225','Doolittle','Housholder','Cholesky','QR','Givens');
 
-graficarValores2(resultDoo289,valorHous289,resultCholesky289, resultQR289,valorGiv289);
-graficarValores2(resultDoo1089,valorHous1089,resultCholesky1089, resultQR1089,valorGiv1089);
-graficarValores2(resultDoo4225,valorHous4225,resultCholesky4225, resultQR4225,valorGiv4225);
+graficarValores2(resultDoo289,resultHous289,resultCholesky289, resultQR289,resultGiv289);
+graficarValores2(resultDoo1089,resultHous1089,resultCholesky1089, resultQR1089,resultGiv1089);
+graficarValores2(resultDoo4225,resultHous4225,resultCholesky4225, resultQR4225,resultGiv4225);
 %graphTimeJacobiSeidel(tiempos289,'Matriz 289x289','Jacobi','Seidel');
 %graphTimeJacobiSeidel(tiempos1089,'Matriz 1089x1089','Jacobi','Seidel');
 %graphTimeJacobiSeidel(tiempos4225,'Matriz 4225x4225','Jacobi','Seidel');

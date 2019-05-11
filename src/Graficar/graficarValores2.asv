@@ -3,18 +3,15 @@ function graficarValores2(doolittle, housholder, cholesky,qr,givens)
 subplot(3,2,1);
 plot([doolittle],'og','MarkerSize',2,'MarkerFaceColor','g'); hold on;
 ylabel('Resultados') 
-xlabel('Variables')
-legend('Doolittle');
+xlabel('Variables') 
 subplot(3,2,2);
 plot([cholesky],'*m','MarkerSize',2,'MarkerFaceColor','m'); hold on;
 ylabel('Resultados') 
-xlabel('Variables')
-legend('Cholesky');
+xlabel('Variables') 
 subplot(3,2,3);
 plot([qr],'+b','MarkerSize',2,'MarkerFaceColor','b'); hold on;
 ylabel('Resultados') 
-xlabel('Variables')
-legend('QR');
+xlabel('Variables') 
 subplot(3,2,4);
 plot([givens],'pc','MarkerSize',2,'MarkerFaceColor','c'); hold on;
 ylabel('Resultados')
