@@ -1,10 +1,9 @@
-function [L,error,contDoo] = doolittle(A, b)
+function [x,contDoo] = doolittle(A, b)
     n = length(b);
     contDoo = 0;
-    error = 0;
-    L = zeros(n, 1);
-    U = zeros(n, 1);
-    % decomposition of matrix, Doolittle’s Method
+    x = zeros(n, 1);
+    y = zeros(n, 1);
+    % Factorización LU, método doolittle
     for i = 1:1:n
         for j = 1:1:(i - 1)
             alpha = A(i,j);
@@ -29,23 +28,21 @@ function [L,error,contDoo] = doolittle(A, b)
     for i = 1:1:n
         alpha = 0;
         for k = 1:1:i
-            alpha = alpha + A(i,k)*U(k);
+            alpha = alpha + A(i,k)*y(k);
             contDoo = contDoo+2;
         end
-        U(i) = b(i) - alpha;
+        y(i) = b(i) - alpha;
         contDoo = contDoo+1;
     end
     % find solution of Ux = y
     for i = n:(-1):1
         alpha = 0;
         for k = (i + 1):1:n
-            alpha = alpha + A(i,k)*L(k);
+            alpha = alpha + A(i,k)*x(k);
             contDoo = contDoo+2;
         end
-        L(i) = (U(i) - alpha)/A(i, i);
+        x(i) = (y(i) - alpha)/A(i, i);
         contDoo = contDoo+2;
     end
-    I = eye(n,n);
-    error = norm(I-inv(L*U)*A);
 
 end

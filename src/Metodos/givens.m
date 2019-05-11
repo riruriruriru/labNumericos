@@ -1,9 +1,8 @@
-function [X,Error,contador1Giv,contador2Giv] = givens(A,b)
+function [X,contGivens] = givens(A,b)
     [m , n] = size(A);
     Q = eye(m);
     R = A;
-    contador1Giv = 0;
-    contador2Giv = 0;
+    contGivens = 0;
     for i=1:n
         for k=i+1:m
             if (R(k,i) ~= 0)
@@ -17,15 +16,15 @@ function [X,Error,contador1Giv,contador2Giv] = givens(A,b)
                 G(i,k) = s;
                 Q = Q*G; % Matriz ortogonal
                 R = G'*R; % Matriz triangular inferior
-                contador1Giv = contador1Giv + 1;
-                contador2Giv = contador2Giv + 6;
+                [n1,m1] = size(Q);
+                [n2,m2] = size(R);
+                [n3,m3] = size(G);
+                contGivens = contGivens+4+(m1*n3)+(m3*n2);
             end
         end
-        contador1Giv = contador1Giv + 1;
+        
     end
       Y = inv(Q)*b;
       X = inv(R)*Y;
-      Error = norm(eye(n)-inv(Q*R)*A);
-      contador1Giv = contador1Giv + 1;
-      contador2Giv = contador2Giv + 4;
+      
 end

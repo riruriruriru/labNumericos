@@ -1,4 +1,4 @@
-function [x,Error,contHouseholder] = Householder(A,b)
+function [x,contHouseholder] = Householder(A,b)
     contHouseholder = 0;
     [m,n] = size(A);
     %Se descompone en forma QR, primero creando las matrices Q y R
@@ -11,13 +11,16 @@ function [x,Error,contHouseholder] = Householder(A,b)
         w     = R(j:end,j)/u1;
         w(1)  = 1;
         tau   = -s*u1/normx;
-        [nn,mm] = size(w);
+        [nn,mm] = size(tau);
+        [nn1,mm1] = size(w);
+        [a1,b1] = size(R(j:end,j));
         R(j:end,:) = R(j:end,:)-(tau*w)*(w'*R(j:end,:));
         Q(:,j:end) = Q(:,j:end)-(Q(:,j:end)*w)*(tau*w)';
-        contHouseholder = contHouseholder +15;
+        [aa,bb] = size(R(j:end,:));
+        [aa1,bb2] = size(Q(:,j:end));
+        contHouseholder = contHouseholder +(nn1*mm1)+4*(mm*nn)+(a1*b1)+(j*j)+(aa*bb)+(aa1*bb2);
     end
     z = inv(Q)*b;
     x = inv(R)*z; 
-    Error = norm(eye(m)-inv(Q*R)*A);
     contHouseholder =contHouseholder+5+3*n;
 end
