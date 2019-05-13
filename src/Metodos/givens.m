@@ -1,30 +1,29 @@
 function [X,contGivens] = givens(A,b)
-    [m , n] = size(A);
-    Q = eye(m);
-    R = A;
-    contGivens = 0;
-    for i=1:n
-        for k=i+1:m
-            if (R(k,i) ~= 0)
-                raiz = sqrt(R(k,i)^2 + R(i,i)^2);
-                s = -R(k,i)/raiz;
-                c = R(i,i)/raiz;
-                G = eye(m); % Matriz de rotacion
-                G(i,i) = c;
-                G(k,k) = c;
-                G(k,i) = -s;
-                G(i,k) = s;
-                Q = Q*G; % Matriz ortogonal
-                R = G'*R; % Matriz triangular inferior
-                [n1,m1] = size(Q);
-                [n2,m2] = size(R);
-                [n3,m3] = size(G);
-                contGivens = contGivens+4+(m1*n3)+(m3*n2);
-            end
+%GIVENS Summary of this function goes here
+%   Detailed explanation goes here
+[m, n] = size(A);
+Q=eye(m);
+contGivens = 0;
+contAux = 0;
+for j=1:n
+    for i=1(j+1):m;
+        if A(i,j)~=0
+            xi = A(i,j);
+            xj = A(i,j);
+            [G,contAux] = makeGivens(m,i,j,xi,xj);
+            Q = Q*G';
+            A = G*A;
+            [n1,m1] = size(A);
+            [n2,m2] = size(Q);
+            [n3,m3] = size(G);
+            contGivens = contGivens+2 + contAux + (n1*m1)+(n2*m2)+(n3*m3);
         end
-        
     end
-      Y = inv(Q)*b;
-      X = inv(R)*Y;
-      
+end
+%r = triu(A);
+
+X=inv(A) * Q' * b;
+[n4,m4] = size(b);
+[n5,m5] = size(Q);
+contGivens = contGivens + (m4*n5)+(n*m5)+(n*m);
 end

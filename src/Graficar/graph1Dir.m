@@ -1,5 +1,5 @@
-function graph1Dir(v1, legend1,titulo)
-figure1 = figure;
+function graph1Dir(v1, legend1,titulo,f)
+figure1 = figure(f);
 axes1 = axes('Parent',figure1);
 box(axes1,'on');
 hold(axes1,'all');

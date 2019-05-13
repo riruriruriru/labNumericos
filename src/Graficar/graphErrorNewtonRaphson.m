@@ -1,4 +1,4 @@
-function graphErrorNewtonRaphson(YMatrix1)
+function graphErrorNewtonRaphson(error)
 %CREATEFIGURE(YMATRIX1)
 %  YMATRIX1:  matrix of y data
 
@@ -13,7 +13,7 @@ box(axes1,'on');
 hold(axes1,'on');
 
 % Create multiple lines using matrix input to plot
-plot1 = plot(YMatrix1,'Parent',axes1);
+plot1 = plot(error,'Parent',axes1);
 set(plot1(1),'DisplayName','errores(:,1)');
 set(plot1(2),'DisplayName','errores(:,2)');
 set(plot1(3),'DisplayName','errores(:,3)');
@@ -27,4 +27,4 @@ ylabel('Errores');
 % Create legend
 legend(axes1,'show');
 legend('x1','x2','x3');
-
+title("Error newton raphson");

@@ -1,5 +1,8 @@
-function graficarDirectosConGivens(doolittle, housholder, cholesky,qr,givens)
-[n,m] = size(doolittle)
+function graficarDirectosConGivens(doolittle, housholder, cholesky,qr,givens,f)
+figure(f);
+[n,m] = size(doolittle);
+string = "Resultados Metodos directos"+" "+n+"x"+n;
+[n,m] = size(doolittle);
 subplot(3,2,1);
 plot([doolittle],'og','MarkerSize',2,'MarkerFaceColor','g'); hold on;
 ylabel('Resultados') 
@@ -25,6 +28,5 @@ plot([housholder],'ok','MarkerSize',2,'MarkerFaceColor','k'); hold on;
 ylabel('Resultados') 
 xlabel('Variables') 
 legend('Householder');
-
-
+suptitle(string);
 end

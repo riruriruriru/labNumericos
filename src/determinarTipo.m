@@ -1,4 +1,4 @@
-function [resultado,iter] = determinarTipo(A, b)
+function [resultado,iter,nn] = determinarTipo(A, b,n)
 %caracteristicas
 %c1 = logical(definidaPositiva(matrix)) %def positiva
 %c2 = logical(definidaSemiPositiva(matrix)) %semi positiva
@@ -6,7 +6,10 @@ function [resultado,iter] = determinarTipo(A, b)
 %c4 = logical(simetrica(matrix)) %simetrica
 %c5 = logical(dispersa(matrix)) %dispersa
 %c6 = logical(diagonalDominante(matrix)) %diagonal dominante
+tic,
 [c1,c2,c3,c4,c5,c6] = determinarC(A);
+resultado = toc;
+nn = n;
 tol = 10^-18;
 iter = 0;
 %LU no cholesky: matrices cuadradas e inversa->determinante distinto de 0
@@ -27,7 +30,8 @@ if n ~= m
         [resultHous, contHous] = Householder(A,b);
         resultado = [resultGiv,resultQR, resultHous];
         iter = contGiv+contQR+contHous;
-        graph3Dir(resultGiv,resultQR,resultHous, "Givens","QR","Householder","Resultados matrices no cuadradas");
+        nn = nn+1;
+        graph3Dir(resultGiv,resultQR,resultHous, "Givens","QR","Householder","Resultados matrices no cuadradas",nn);
         return
     end
 else
@@ -44,8 +48,10 @@ else
                 [SolucJaco, ErrorJaco, contJaco] = gaussJacobi(A, b, tol);
                 [SolucSei, ErrorSei, contSei] = gaussSeidel(A, b, tol);
                 iter = contJaco+contSei;
-                graficarResultadosIterativos(SolucJaco, SolucSei, 'Aproximaciones matriz grande, dispersa y diagonal dominante');
-                graficarErrorIterativos(ErrorJaco, ErrorSei,"Errores matriz grande, dispersa y diagonal dominante");
+                nn = nn+1;
+                graficarResultadosIterativos(SolucJaco, SolucSei, 'Aproximaciones matriz grande, dispersa y diagonal dominante',nn);
+                nn = nn+1;
+                graficarErrorIterativos(ErrorJaco, ErrorSei,"Errores matriz grande, dispersa y diagonal dominante",nn);
 
             end
         end
@@ -58,12 +64,15 @@ else
             [resultCholesky,contCholesky]=cholesky(A, b);
             [resultDoo,contDoo] = doolittle(A, b); 
             [resultGivens,contGivens] = givens(A,b);
-            graph3Dir(resultCholesky,resultGivens,resultDoo, "Cholesky","Givens","Doolittle","Resultados matrices positivas, dispersas, simetricas y diagonal dominante");
+            nn = nn+1;
+            graph3Dir(resultCholesky,resultGivens,resultDoo, "Cholesky","Givens","Doolittle","Resultados matrices positivas, dispersas, simetricas y diagonal dominante",nn);
             [SolucJaco, ErrorJaco, contJaco] = gaussJacobi(A, b, tol);
             [SolucSei, ErrorSei, contSei] = gaussSeidel(A, b, tol);
             iter = contJaco+contSei+contGivens+contDoo+contCholesky;
-            graficarResultadosIterativos(SolucJaco, SolucSei, 'Aproximaciones matriz simetrica, diagonal dominante, positiva y dispersa');
-            graficarErrorIterativos(ErrorJaco, ErrorSei,"Errores matriz simetrica, diagonal dominante, positiva y dispersa");
+            nn = nn+1;
+            graficarResultadosIterativos(SolucJaco, SolucSei, 'Aproximaciones matriz simetrica, diagonal dominante, positiva y dispersa',nn);
+            nn = nn+1;
+            graficarErrorIterativos(ErrorJaco, ErrorSei,"Errores matriz simetrica, diagonal dominante, positiva y dispersa",nn);
             %agregar iterativos
         elseif c1 == 1 && c4 == 1 && c5 == 1 && c6 == 0
             string = 'Matriz simetrica, definida positiva y dispersa. Se resolverá con cholesky, givens y LU doolittle';
@@ -72,7 +81,8 @@ else
             [resultDoo,contDoo] = doolittle(A, b); 
             [resultGivens,contGivens] = givens(A,b);
             iter = contGivens+contDoo+contCholesky;
-            graph3Dir(resultCholesky,resultGivens,resultDoo, "Cholesky","Givens","Doolittle","Resultados matrices positivas, dispersas, simetricas");
+            nn = nn+1;
+            graph3Dir(resultCholesky,resultGivens,resultDoo, "Cholesky","Givens","Doolittle","Resultados matrices positivas, dispersas, simetricas",nn);
        
         elseif c4 == 1 && c1 ~= 1 && c5 == 1 && c6 == 0
             string = 'Matriz simetrica, dispersa y no definida positiva. Se resolverá con housholder, givens, QR y LU doolittle';
@@ -82,15 +92,18 @@ else
             [resultGivens,contGivens] = givens(A,b);
             [resultHous,contHous] = Householder(A,b);
             iter = contGivens+contDoo+contQR+contHous;
-            graph4Dir(resultQR,resultGivens,resultDoo,resultHous, "QR","Givens","Doolittle","Householder","Resultados simetricas y dispersas");
+            nn = nn+1;
+            graph4Dir(resultQR,resultGivens,resultDoo,resultHous, "QR","Givens","Doolittle","Householder","Resultados simetricas y dispersas",nn);
         elseif c6 == 1 && c5 == 1   %dispersa y diagonal dominante
             string = 'Matriz dispersa y diagonal dominante, se resolvera con métodos iterativos';
             disp(string)
             [SolucJaco, ErrorJaco, contJaco] = gaussJacobi(A, b, tol);
             [SolucSei, ErrorSei, contSei] = gaussSeidel(A, b, tol);
             iter = contJaco+contSei;
-            graficarResultadosIterativos(SolucJaco, SolucSei, 'Aproximaciones matriz pequeña, dispersa y diagonal dominante');
-            graficarErrorIterativos(ErrorJaco, ErrorSei,"Errores matriz pequeña, dispersa y diagonal dominante");
+            nn = nn+1;
+            graficarResultadosIterativos(SolucJaco, SolucSei, 'Aproximaciones matriz pequeña, dispersa y diagonal dominante',nn);
+            nn = nn+1;
+            graficarErrorIterativos(ErrorJaco, ErrorSei,"Errores matriz pequeña, dispersa y diagonal dominante",nn);
         elseif c5 ==0 %matriz no dispersa
             %aplicar housholder y QR
             string = 'Matriz no dispersa. Se resolverá con housholder y QR';
@@ -98,14 +111,16 @@ else
             [resultQR,contQR]=QR(A, b); 
             [resultHous,contHous] = Householder(A,b);
             iter = contQR+contHous;
-            graph2Dir(resultQR,resultHous, "QR","Householder","Resultados no dispersa");
+            nn = nn+1;
+            graph2Dir(resultQR,resultHous, "QR","Householder","Resultados no dispersa",nn);
         elseif c4 == 1 && c1 == 1 %simetrica y definida positiva
             %aplicar cholesky
             string = 'Matriz simétrica y definida positiva. Se resolverá con cholesky';
             disp(string)
             [resultCholesky,contCholesky]=cholesky(A, b);
             iter = contCholesky;
-            graph1Dir(resultCholesky,"Cholesky","Resultados no dispersa");
+            nn = nn+1;
+            graph1Dir(resultCholesky,"Cholesky","Resultados no dispersa",nn);
 
         elseif c5 == 1 && c6 == 0 %matriz dispersa pero sin diagonal dominante
             string = 'Matriz dispersa. Se resolverá con givens y householder';
@@ -113,7 +128,8 @@ else
             [resultGiv,contGiv]=givens(A, b); 
             [resultHous,contHous] = Householder(A,b);
             iter = contGiv+contHous;
-            graph2Dir(resultGiv,resultHous, "Givens","Householder","Resultados dispersa");
+            nn = nn+1;
+            graph2Dir(resultGiv,resultHous, "Givens","Householder","Resultados dispersa",nn);
         else
             %no se cumplio ninguna especifica, se aplicara  doolittle y QR
             string = 'No se cumplió ninguna condición específica. Se resolverá con LU doolittle y QR';
@@ -121,7 +137,8 @@ else
             [resultDoolittle,contDoolittle]=doolittle(A, b); 
             [resultQR,contQR] = QR(A,b);
             iter = contDoolittle+contQR;
-            graph2Dir(resultDoolittle,resultQR, "Doolittle","QR","Resultados matriz pequeña");
+            nn = nn+1;
+            graph2Dir(resultDoolittle,resultQR, "Doolittle","QR","Resultados matriz pequeña",nn);
             %aplicar ambos
         end
         

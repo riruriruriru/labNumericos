@@ -1,6 +1,6 @@
-function graphTimeAlgoritmo(tiempos,titulo,name1,name2,name3)
+function graphTimeAlgoritmo(tiempos,titulo,name1,name2,name3,f)
 
-figure1 = figure('Name','Tiempo metodos');
+figure1 = figure(f);
 
 axes1 = axes('Parent',figure1);
 box(axes1,'on');

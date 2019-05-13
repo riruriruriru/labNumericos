@@ -1,6 +1,6 @@
-function graficarErrorIterativos(errorJacobi, errorSeidel, titulo)
+function graficarErrorIterativos(errorJacobi, errorSeidel, titulo,f)
 
-figure1 = figure;
+figure1 = figure(f);
 
 axes1 = axes('Parent',figure1);
 box(axes1,'on');

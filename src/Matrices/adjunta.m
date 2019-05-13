@@ -8,7 +8,6 @@ if n == m
             otraMatriz = matriz;
             otraMatriz(:,j) = [];
             otraMatriz(i,:) = [];
-            %respuesta(i,j)= signo*determinante(otraMatriz);
             respuesta(i,j) = signo*det(otraMatriz);
             signo = signo * -1;
         end

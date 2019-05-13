@@ -1,4 +1,5 @@
-function graficarResultadosDirSinGivens(doolittle, housholder, cholesky,qr)
+function graficarResultadosDirSinGivens(doolittle, housholder, cholesky,qr,f)
+figure(f);
 [n,m] = size(doolittle)
 subplot(2,2,1);
 plot([doolittle],'og','MarkerSize',2,'MarkerFaceColor','g'); hold on;

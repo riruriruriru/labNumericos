@@ -1,4 +1,4 @@
-function graphResultsNewtonRaphson(YMatrix1)
+function graphResultsNewtonRaphson(resultados)
 %CREATEFIGURE(YMATRIX1)
 %  YMATRIX1:  matrix of y data
 
@@ -13,7 +13,7 @@ box(axes1,'on');
 hold(axes1,'on');
 
 % Create multiple lines using matrix input to plot
-plot1 = plot(YMatrix1,'Parent',axes1);
+plot1 = plot(resultados,'Parent',axes1);
 set(plot1(1),'DisplayName','raices(:,1)');
 set(plot1(2),'DisplayName','raices(:,2)');
 set(plot1(3),'DisplayName','raices(:,3)');
@@ -27,4 +27,5 @@ ylabel('Raices');
 % Create legend
 legend(axes1,'show');
 legend('x1','x2','x3');
+title("Aproximaciones newton raphson");
 
