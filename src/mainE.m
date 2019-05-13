@@ -1,6 +1,6 @@
 %close all
 format long
-tol = 10^-18;%buscar error minimo maquina, 10^-18 cercano al tamanio de un float double en matlab, 64 bits
+tol = 10^-18;%error minimo maquina, 10^-18 cercano al tamanio de un float double en matlab, 64 bits
 addpath(genpath('..\src\'));
 %Matriz de 289x289
 A289 = load('src\sistemas\289x289\A289.dat');
